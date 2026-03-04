@@ -1,0 +1,10 @@
+run:
+  run_name: "sweep_blocks"
+  seed: 12345
+  out_dir: "results/sweep_blocks"
+
+sweep:
+  param: "structure.B"
+  values: [4, 8, 16, 32]
+
+base_config: "configs/default_block256.yaml"

@@ -1,0 +1,10 @@
+run:
+  run_name: "sweep_n"
+  seed: 12345
+  out_dir: "results/sweep_n"
+
+sweep:
+  param: "problem.n"
+  values: [64, 128, 256, 512]
+
+base_config: "configs/default_block256.yaml"

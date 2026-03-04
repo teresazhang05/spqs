@@ -1,0 +1,11 @@
+build*/
+results/
+*.log
+*.o
+*.a
+*.so
+*.dylib
+__pycache__/
+tools/__pycache__/
+*.zip
+*.tar.gz

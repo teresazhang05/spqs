@@ -1,0 +1,76 @@
+run:
+  run_name: "claim_block256_burst"
+  seed: 12345
+  out_dir: "results/claim_block256_burst"
+  threads: 1
+  pin_cpu: 2
+  disable_turbo: true
+  disable_smt: true
+
+problem:
+  n: 256
+  a_max: 96
+  I_max: 200
+
+structure:
+  mode: "block_sparse"
+  B: 16
+  block_sizes: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16]
+  m_local_per_block: 64
+  m_global: 32
+
+generator:
+  A_local_type: "dense_in_block_normalized"
+  A_global_type: "factor_plus_gross"
+  factors: 8
+  row_norm: "l2_unit"
+  b_margin: 10.0
+  b_noise_std: 0.20
+
+solver:
+  warm_start: true
+  bland_rule: true
+  feasibility: "certified"
+  q_anchor: "zero"
+  strict_interior: true
+  kappa_min: 1.0e-6
+  tau_abs_scale: 8.0
+  tau_shrink_min: 0.0
+  tau_shrink_max: 1.0e-3
+  fallback_enabled: true
+  fallback_mode: "ray_scale_to_anchor"
+
+stream:
+  mode: "correlated_block_sparse_burst"
+  seed_stream: 424242
+  T_warmup: 1000000
+  T_latency: 50000000
+  T_feas: 1000000000
+  ar_rho: 0.995
+  K_small: 1
+  K_small_alt: 2
+  p_K_small_alt: 0.02
+  delta_small: 0.20
+  p_jump: 0.001
+  K_jump: 4
+  delta_jump: 2.0
+  clamp_inf: 100.0
+  burst:
+    enabled: true
+    every_ticks: 2000000
+    length_ticks: 20000
+    K_burst: 6
+    delta_burst: 2.0
+    p_jump_in_burst: 0.01
+    K_jump_in_burst: 10
+    delta_jump_in_burst: 8.0
+  q_small: 1.0
+  q_big: 50.0
+  p_big: 0.005
+
+instrumentation:
+  latency_clock: "rdtsc"
+  perf:
+    enabled: true
+  energy:
+    enabled: true
